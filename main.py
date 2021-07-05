@@ -4,8 +4,12 @@ from typing import Optional
 app = FastAPI()
 
 @app.get('/blog')
-def index(limit):
-    return {'data':f'{limit} blogs from the database'}
+def index(limit=10,published:bool=True,sort:Optional[str]=None): #here we define the default value of limit and published
+    # return (published)
+    if published:
+        return {'data':f'{limit} blogs from the database'}
+    else:
+        return {'data' : 'not published yet'}
 
 @app.get('/about')
 def about():
