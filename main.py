@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
+import uvicorn
 
 app = FastAPI()
 
@@ -40,4 +41,9 @@ class Blog(BaseModel):
 
 @app.post('/blog')
 def createBlog(request: Blog):
-    return {'data':"Blog is ceated"}
+    return {'data':f"Blog is ceated {request}"}
+
+
+# for debugging on another port
+if __name__ == '__main__':
+    uvicorn.run(app, host='127.0.0.1',port='8000')
