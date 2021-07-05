@@ -33,6 +33,7 @@ def comments(id:int):
     return {'data':{id:'comments on blog'}}
 
 
+# to add details
 @app.post('/blog')
 def createBlog(request: schemas.Blog):
     return {'data':f"Blog is ceated {request}"}
