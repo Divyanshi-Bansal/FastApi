@@ -2,10 +2,32 @@ from fastapi import FastAPI
 from typing import Optional
 import uvicorn
 import schemas
+import models
+from database import engine
 
 # from .schemas import Blog
 
 app = FastAPI()
+
+models.Base.metadata.create_all(engine)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.get('/')
 def index(limit=10,published:bool=True,sort:Optional[str]=None): #here we define the default value of limit and published

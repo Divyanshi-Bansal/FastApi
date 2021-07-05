@@ -2,3 +2,4 @@ fastApi
 uvicorn
 typing
 pydantic
+sqlalchemy
