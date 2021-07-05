@@ -4,5 +4,5 @@ from typing import Optional
 class Blog(BaseModel):
     title: str
     body: str
-    name : str
+    name: str
     published: Optional[bool]
