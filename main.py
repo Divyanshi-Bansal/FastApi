@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from typing import Optional
-from pydantic import BaseModel
 import uvicorn
 
 app = FastAPI()
@@ -31,13 +30,6 @@ def show(id:int):
 def comments(id:int):
     return {'data':{id:'comments on blog'}}
 
-
-# to get data from user that add in our api, we need BaseModel for this
-class Blog(BaseModel):
-    title: str
-    body: str
-    name : str
-    published: Optional[bool]
 
 @app.post('/blog')
 def createBlog(request: Blog):
