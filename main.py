@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from typing import Optional
 import uvicorn
 
+from . import schemas
+
 app = FastAPI()
 
 @app.get('/')
@@ -32,7 +34,7 @@ def comments(id:int):
 
 
 @app.post('/blog')
-def createBlog(request: Blog):
+def createBlog(request: schemas.Blog):
     return {'data':f"Blog is ceated {request}"}
 
 
