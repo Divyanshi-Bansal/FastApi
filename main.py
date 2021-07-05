@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from typing import Optional
 import uvicorn
+import schemas
 
-from . import schemas
+# from .schemas import Blog
 
 app = FastAPI()
 
@@ -40,5 +41,5 @@ def createBlog(request: schemas.Blog):
 
 
 # for debugging on another port
-if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1',port='8000')
+# if __name__ == '__main__':
+#     uvicorn.run(app, host='127.0.0.1',port='8000')
