@@ -81,7 +81,7 @@ def blogDelete(id:int , db:Session = Depends(get_db)):
 def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
 
-    if not blog:
+    if not blog.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"blog with id {id} is not found.")
 
     blog.update(request)
