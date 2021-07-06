@@ -15,7 +15,8 @@ class Blog(Base):
 class User(Base):
     __tablename__ = 'users'
 
-    name:Column(str)
-    email:Column(str)
-    password:Column(str)
-    contact:Column(int)
+    id = Column(Integer , primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String)
+    password = Column(String)
+    contact = Column(String)

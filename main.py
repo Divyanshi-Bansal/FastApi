@@ -94,7 +94,13 @@ def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
     return "updated"
 
 
-
+@app.post('/users')
+def createUser(request: schemas.ShowUser, db:Session = Depends(get_db)):
+    newUser = models.User(name = request.name , email = request.email , password = request.password , contact = request.contact)
+    db.add(newUser)
+    db.commit()
+    db.refresh(newUser)
+    return newUser
 
 
 
