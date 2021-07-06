@@ -1,4 +1,4 @@
-from fastapi import FastAPI , Depends
+from fastapi import FastAPI , Depends , status , Response
 from typing import Optional
 import uvicorn
 import schemas
@@ -48,14 +48,16 @@ def unpublished():
     return {'data':'unpublished blog data here'}
 
 
-@app.get('/blog/{id}')
-def show(id:int , db:Session = Depends(get_db)):
+@app.get('/blog/{id}' , status_code=200)
+def show(id:int ,response:Response , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if not blog:
+        response.status_code = status.HTTP_404_NOT_FOUND
     return blog
 
 
 # to add details
-@app.post('/blog')
+@app.post('/blog', status_code=status.HTTP_201_CREATED)
 def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     # return {'data':f"Blog is ceated {request}"}
     # newBlog is going to schemas
