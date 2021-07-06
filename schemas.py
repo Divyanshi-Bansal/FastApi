@@ -19,7 +19,7 @@ class ShowBlog(BaseModel):
         orm_mode= True
 
 
-class ShowUser(BaseModel):
+class User(BaseModel):
     name:str
     email:str
     password:str

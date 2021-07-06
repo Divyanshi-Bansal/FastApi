@@ -98,7 +98,7 @@ def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
 
 
 @app.post('/users')
-def createUser(request: schemas.ShowUser, db:Session = Depends(get_db)):
+def createUser(request: schemas.User, db:Session = Depends(get_db)):
     hashedPwd = Hash.bcrypt(request.password)
     newUser = models.User(name = request.name , email = request.email , password = hashedPwd , contact = request.contact)
     db.add(newUser)
