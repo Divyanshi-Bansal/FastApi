@@ -50,7 +50,7 @@ def unpublished():
 
 @app.get('/blog/{id}')
 def show(id:int , db:Session = Depends(get_db)):
-    blog = db.query(models.Blog).where(models.Blog.id == id).first()
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     return blog
 
 
