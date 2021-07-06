@@ -10,8 +10,17 @@ class Blog(BaseModel):
     published: Optional[bool]
 
 class ShowBlog(BaseModel):
-    class Config():
-        orm_mode= True
+
     name:str
     title:str
     published:Optional[bool]
+
+    class Config():
+        orm_mode= True
+
+
+class User(BaseModel):
+    name:str
+    email:str
+    password:str
+    contact:int
