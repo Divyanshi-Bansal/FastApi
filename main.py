@@ -107,6 +107,16 @@ def createUser(request: schemas.User, db:Session = Depends(get_db)):
     return newUser
 
 
+@app.get('/users/{id}' , response_model=schemas.ShowUser)
+def showUser(id:int , db:Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == id).first()
+
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"user with id {id} is not found.")
+
+    return user
+
+
 
 # for debugging on another port
 # if __name__ == '__main__':

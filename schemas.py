@@ -24,3 +24,11 @@ class User(BaseModel):
     email:str
     password:str
     contact:int
+
+class ShowUser(BaseModel):
+    name:str
+    email:str
+    contact:int
+
+    class Config():
+        orm_model = True
