@@ -1,9 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI , Depends
 from typing import Optional
 import uvicorn
 import schemas
 import models
-from database import engine
+from database import engine , SessionLocal
+from sqlalchemy.orm import Session
+
 
 # from .schemas import Blog
 
@@ -14,18 +16,12 @@ models.Base.metadata.create_all(engine)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+def get_db():
+    db= SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close
 
 
 
@@ -58,9 +54,14 @@ def comments(id:int):
 
 # to add details
 @app.post('/blog')
-def createBlog(request: schemas.Blog):
-    return {'data':f"Blog is ceated {request}"}
-
+def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
+    # return {'data':f"Blog is ceated {request}"}
+    # newBlog is going to schemas
+    newBlog = models.Blog(id = request.id , title = request.title , body = request.body , name = request.name, published=request.published)
+    db.add(newBlog)
+    db.commit()
+    db.refresh(newBlog)
+    return newBlog
 
 # for debugging on another port
 # if __name__ == '__main__':

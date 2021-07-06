@@ -11,6 +11,3 @@ SessionLocal =  sessionmaker(bind=engine , autocommit=False , autoflush=False)
 
 # allow us to create classes that include directives to describe the actual database table they will be mapped to.
 Base = declarative_base()
-
-
-
