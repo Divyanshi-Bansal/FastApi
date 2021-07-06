@@ -9,3 +9,13 @@ class Blog(Base):
     title = Column(String)
     body = Column(String)
     published = Column(BOOLEAN)
+
+
+
+class User(Base):
+    __tablename__ = 'users'
+
+    name:Column(str)
+    email:Column(str)
+    password:Column(str)
+    contact:Column(int)
