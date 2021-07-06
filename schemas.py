@@ -8,3 +8,8 @@ class Blog(BaseModel):
     title: str
     body: str
     published: Optional[bool]
+
+class ShowBlog(Blog):
+    name:str
+    title:str
+    published:Optional[bool]
