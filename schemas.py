@@ -9,7 +9,9 @@ class Blog(BaseModel):
     body: str
     published: Optional[bool]
 
-class ShowBlog(Blog):
+class ShowBlog(BaseModel):
+    class Config():
+        orm_mode= True
     name:str
     title:str
     published:Optional[bool]

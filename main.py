@@ -1,5 +1,5 @@
 from fastapi import FastAPI , Depends , status , Response ,  HTTPException
-from typing import Optional
+from typing import Optional ,List
 import uvicorn
 import schemas
 import models
@@ -39,16 +39,16 @@ def allBlogs(db:Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
 
-@app.get('/about')
-def about():
-    return {'data':'about blog page'}
+# @app.get('/about')
+# def about():
+#     return {'data':'about blog page'}
+#
+# @app.get('/blog/unpublished')
+# def unpublished():
+#     return {'data':'unpublished blog data here'}
 
-@app.get('/blog/unpublished')
-def unpublished():
-    return {'data':'unpublished blog data here'}
 
-
-@app.get('/blog/{id}' , status_code=200)
+@app.get('/blog/{id}' , status_code=200 , response_model=schemas.ShowBlog)
 def show(id:int ,response:Response , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
 
