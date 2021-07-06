@@ -69,6 +69,16 @@ def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     db.refresh(newBlog)
     return newBlog
 
+@app.delete('/blog/{id}')
+def blogDelete(id:int , db:Session = Depends(get_db)):
+    db.query(models.Blog).filter(models.Blog.id == id).delete(synchronize_session = False)
+    db.commit()
+    return {"detail":f"successfully delete blog with id {id}"}
+
+
+
+
+
 # for debugging on another port
 # if __name__ == '__main__':
 #     uvicorn.run(app, host='127.0.0.1',port='8000')
