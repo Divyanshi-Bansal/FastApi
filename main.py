@@ -1,4 +1,4 @@
-from fastapi import FastAPI , Depends , status , Response
+from fastapi import FastAPI , Depends , status , Response ,  HTTPException
 from typing import Optional
 import uvicorn
 import schemas
@@ -51,8 +51,10 @@ def unpublished():
 @app.get('/blog/{id}' , status_code=200)
 def show(id:int ,response:Response , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+
     if not blog:
-        response.status_code = status.HTTP_404_NOT_FOUND
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"Blog with id {id} is not present in database")
+
     return blog
 
 
