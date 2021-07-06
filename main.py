@@ -5,7 +5,7 @@ import schemas
 import models
 from database import engine , SessionLocal
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
+from hashing import Hash
 
 
 # from .schemas import Blog
@@ -96,11 +96,10 @@ def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
 
 
 
-pwd_cxt = CryptContext(schemes=["bcrypt"] , deprecated = 'auto')
 
 @app.post('/users')
 def createUser(request: schemas.ShowUser, db:Session = Depends(get_db)):
-    hashedPwd = pwd_cxt.hash(request.password)
+    hashedPwd = Hash.bcrypt(request.password)
     newUser = models.User(name = request.name , email = request.email , password = hashedPwd , contact = request.contact)
     db.add(newUser)
     db.commit()
