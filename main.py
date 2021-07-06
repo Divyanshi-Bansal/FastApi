@@ -49,8 +49,9 @@ def unpublished():
 
 
 @app.get('/blog/{id}')
-def show(id:int):
-    return {'data': id}
+def show(id:int , db:Session = Depends(get_db)):
+    blog = db.query(models.Blog).where(models.Blog.id == id).first()
+    return blog
 
 
 # to add details
