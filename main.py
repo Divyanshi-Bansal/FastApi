@@ -69,6 +69,7 @@ def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     db.refresh(newBlog)
     return newBlog
 
+
 @app.delete('/blog/{id}')
 def blogDelete(id:int , db:Session = Depends(get_db)):
     db.query(models.Blog).filter(models.Blog.id == id).delete(synchronize_session = False)
@@ -76,6 +77,16 @@ def blogDelete(id:int , db:Session = Depends(get_db)):
     return {"detail":f"successfully delete blog with id {id}"}
 
 
+@app.put('/blog/{id}' , status_code=status.HTTP_202_ACCEPTED)
+def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id == id)
+
+    if not blog:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"blog with id {id} is not found.")
+
+    blog.update(request)
+    db.commit()
+    return "updated"
 
 
 
