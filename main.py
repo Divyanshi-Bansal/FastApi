@@ -97,7 +97,7 @@ def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
 
 
 
-@app.post('/users')
+@app.post('/users' , tags=['Users'])
 def createUser(request: schemas.User, db:Session = Depends(get_db)):
     hashedPwd = Hash.bcrypt(request.password)
     newUser = models.User(name = request.name , email = request.email , password = hashedPwd , contact = request.contact)
@@ -107,7 +107,7 @@ def createUser(request: schemas.User, db:Session = Depends(get_db)):
     return newUser
 
 
-@app.get('/users/{id}' , status_code=200 , response_model=schemas.ShowUser)
+@app.get('/users/{id}' , status_code=200 , response_model=schemas.ShowUser , tags=['Users'])
 def showUser(id:int , db:Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
 
@@ -117,7 +117,7 @@ def showUser(id:int , db:Session = Depends(get_db)):
     return user
 
 
-@app.put('/users/{id}')
+@app.put('/users/{id}' , tags=['Users'])
 def updateUser(id:int ,request:schemas.User , db:Session = Depends(get_db)):
     newuser = db.query(models.User).filter(models.User.id == id)
 
@@ -129,7 +129,7 @@ def updateUser(id:int ,request:schemas.User , db:Session = Depends(get_db)):
     return "updated successfully"
 
 
-@app.delete('/user/{id}')
+@app.delete('/user/{id}' , tags=['Users'])
 def deleteUser(id:int , db:Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id)
 
