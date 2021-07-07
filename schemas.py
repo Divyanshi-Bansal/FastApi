@@ -25,10 +25,12 @@ class User(BaseModel):
     password:str
     contact:int
 
+
 class ShowUser(BaseModel):
+
     name:str
     email:str
     contact:int
 
     class Config():
-        orm_model = True
+        orm_mode =True

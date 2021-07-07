@@ -1,5 +1,5 @@
 from fastapi import FastAPI , Depends , status , Response ,  HTTPException
-from typing import Optional ,List
+from typing import Optional ,List , Dict
 import uvicorn
 import schemas
 import models
@@ -107,7 +107,7 @@ def createUser(request: schemas.User, db:Session = Depends(get_db)):
     return newUser
 
 
-@app.get('/users/{id}' , response_model=schemas.ShowUser)
+@app.get('/users/{id}' , status_code=200 , response_model=schemas.ShowUser)
 def showUser(id:int , db:Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
 
@@ -116,6 +116,17 @@ def showUser(id:int , db:Session = Depends(get_db)):
 
     return user
 
+
+@app.put('/users/{id}')
+def updateUser(id:int ,request:schemas.User , db:Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == id)
+
+    if not user.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"the user of id {id} is not found.")
+
+    user.update(request)
+    db.commit()
+    return "updated successfully"
 
 
 # for debugging on another port
