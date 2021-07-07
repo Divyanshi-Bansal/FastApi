@@ -28,7 +28,8 @@ class ShowUser(BaseModel):
 class ShowBlog(BaseModel):
 
     title:str
-    creator:ShowUser.name
+    body:str
+    creator:ShowUser
     published:Optional[bool]
 
     class Config():
