@@ -119,14 +119,26 @@ def showUser(id:int , db:Session = Depends(get_db)):
 
 @app.put('/users/{id}')
 def updateUser(id:int ,request:schemas.User , db:Session = Depends(get_db)):
+    newuser = db.query(models.User).filter(models.User.id == id)
+
+    if not newuser.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"the user of id {id} is not found.")
+
+    newuser.update(request)
+    db.commit()
+    return "updated successfully"
+
+
+@app.delete('/user/{id}')
+def deleteUser(id:int , db:Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id)
 
     if not user.first():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"the user of id {id} is not found.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"user of id {id} is not found")
 
-    user.update(request)
+    user.delete(synchronize_session = False)
     db.commit()
-    return "updated successfully"
+    return "deleted successfully"
 
 
 # for debugging on another port
