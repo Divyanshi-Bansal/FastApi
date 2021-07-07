@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional , List
 
 class Blog(BaseModel):
 
@@ -20,6 +20,7 @@ class ShowUser(BaseModel):
     name:str
     email:str
     contact:int
+    blogs: List[Blog]
 
     class Config():
         orm_mode =True
