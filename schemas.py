@@ -3,11 +3,9 @@ from typing import Optional
 
 class Blog(BaseModel):
 
-    name: str
     title: str
     body: str
     published: Optional[bool]
-
 
 
 class User(BaseModel):
@@ -26,11 +24,11 @@ class ShowUser(BaseModel):
     class Config():
         orm_mode =True
 
+
 class ShowBlog(BaseModel):
 
-    name:str
     title:str
-    creator:ShowUser
+    creator:ShowUser.name
     published:Optional[bool]
 
     class Config():
