@@ -64,7 +64,7 @@ def show(id:int ,response:Response , db:Session = Depends(get_db)):
 def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     # return {'data':f"Blog is ceated {request}"}
     # newBlog is going to schemas
-    newBlog = models.Blog(id = request.id , title = request.title , body = request.body , name = request.name, published=request.published)
+    newBlog = models.Blog(title = request.title , body = request.body , name = request.name, published=request.published , userId=1)
     db.add(newBlog)
     db.commit()
     db.refresh(newBlog)
