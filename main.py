@@ -35,7 +35,7 @@ def index(limit=10,published:bool=True,sort:Optional[str]=None): #here we define
         return {'data' : 'not published yet'}
 
 
-@app.get('/blog')
+@app.get('/blog' , tags=['Blogs'])
 def allBlogs(db:Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
@@ -49,7 +49,7 @@ def allBlogs(db:Session = Depends(get_db)):
 #     return {'data':'unpublished blog data here'}
 
 
-@app.get('/blog/{id}' , status_code=200 , response_model=schemas.ShowBlog)
+@app.get('/blog/{id}' , status_code=200 , response_model=schemas.ShowBlog , tags=['Blogs'])
 def show(id:int ,response:Response , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
 
@@ -60,7 +60,7 @@ def show(id:int ,response:Response , db:Session = Depends(get_db)):
 
 
 # to add details
-@app.post('/blog', status_code=status.HTTP_201_CREATED)
+@app.post('/blog', status_code=status.HTTP_201_CREATED , tags=['Blogs'])
 def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     # return {'data':f"Blog is ceated {request}"}
     # newBlog is going to schemas
@@ -71,7 +71,7 @@ def createBlog(request: schemas.Blog , db:Session = Depends(get_db)):
     return newBlog
 
 
-@app.delete('/blog/{id}')
+@app.delete('/blog/{id}' , tags=['Blogs'])
 def blogDelete(id:int , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
 
@@ -83,7 +83,7 @@ def blogDelete(id:int , db:Session = Depends(get_db)):
     return {"detail":f"successfully delete blog with id {id}"}
 
 
-@app.put('/blog/{id}' , status_code=status.HTTP_202_ACCEPTED)
+@app.put('/blog/{id}' , status_code=status.HTTP_202_ACCEPTED , tags=['Blogs'])
 def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
 
