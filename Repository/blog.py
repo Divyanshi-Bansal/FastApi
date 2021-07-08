@@ -1,7 +1,5 @@
-import models , schemas
-from fastapi import HTTPException , status , Depends
-from sqlalchemy.orm import Session
-from database import get_db
+import models
+from fastapi import HTTPException , status
 
 
 
