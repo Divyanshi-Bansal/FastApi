@@ -16,7 +16,7 @@ def login(request:schemas.login , db:Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="invalid email")
 
-    if not Hash.verifyPwd(user.password == request.password):
+    if not Hash.verifyPwd(user.password , request.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="invalid password")
 
     return user
