@@ -7,6 +7,9 @@ class Blog(BaseModel):
     body: str
     published: Optional[bool]
 
+    class Config():
+        orm_mode = True
+
 
 class User(BaseModel):
     name:str
@@ -14,16 +17,19 @@ class User(BaseModel):
     password:str
     contact:int
 
+    class Config():
+        orm_mode  = True
+
 
 class ShowUser(BaseModel):
 
     name:str
     email:str
     contact:int
-    blogs: List[Blog]
+    blogs: List[Blog] = []
 
     class Config():
-        orm_mode =True
+        orm_mode = True
 
 
 class ShowBlog(BaseModel):
