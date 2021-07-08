@@ -7,3 +7,6 @@ class Hash():
         hashedPwd = pwd_cxt.hash(password)
         return hashedPwd
 
+    def verifyPwd(hashedPwd , plainPwd):
+        return pwd_cxt.verify(plainPwd , hashedPwd)
+
