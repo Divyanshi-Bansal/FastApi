@@ -1,9 +1,10 @@
 from fastapi import APIRouter
-import schemas , models
+import schemas , models , tokens
 from hashing import Hash
 from sqlalchemy.orm import Session
 from fastapi import Depends , HTTPException , status
 from database import get_db
+
 
 router = APIRouter(
     tags=['Authentication']
@@ -19,4 +20,6 @@ def login(request:schemas.login , db:Session = Depends(get_db)):
     if not Hash.verifyPwd(user.password , request.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="invalid password")
 
-    return user
+    access_token = tokens.create_access_token(data={"sub":user.email})
+
+    return {"access_token": access_token , "token_type":"bearer"}
