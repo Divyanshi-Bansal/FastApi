@@ -1,10 +1,10 @@
 from fastapi import APIRouter , Depends , HTTPException , status
 from database import get_db
-import models , schemas , hashing
+import models , schemas
 from sqlalchemy.orm import Session
 
 router = APIRouter(
-    tags='Blogs',
+    tags=['Blogs'],
     prefix = '/blog'
 )
 
@@ -32,7 +32,7 @@ def createBlog(request:schemas.Blog , db:Session = Depends(get_db)):
     return newBlog
 
 
-@router.delete('/blog/{id}' , tags=['Blogs'])
+@router.delete('/blog/{id}')
 def blogDelete(id:int , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
 
@@ -44,7 +44,7 @@ def blogDelete(id:int , db:Session = Depends(get_db)):
     return {"detail":f"successfully delete blog with id {id}"}
 
 
-@router.put('/blog/{id}' , status_code=status.HTTP_202_ACCEPTED , tags=['Blogs'])
+@router.put('/blog/{id}' , status_code=status.HTTP_202_ACCEPTED)
 def blogUpdate(id:int , request:schemas.Blog , db:Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
 
